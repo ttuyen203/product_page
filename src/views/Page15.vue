@@ -1,7 +1,6 @@
 <script setup>
 import banner_1 from "../assets/fixed-aspect-ratio-spacer.png";
 import banner_2 from "../assets/fixed-aspect-ratio-spacer (1).png";
-import ytbIcon from "../assets/youtube_icon.png";
 import logo from "../assets/logo.png";
 import image from "../assets/image.png";
 import image_1 from "../assets/image (1).png";
@@ -10,6 +9,7 @@ import image_3 from "../assets/image (3).png";
 import image_4 from "../assets/image (4).png";
 import image_5 from "../assets/image (5).png";
 import qr from "../assets/qr.png";
+import { Collapse } from "vue-collapsed";
 
 import { ref } from "vue";
 
@@ -19,68 +19,146 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
 import "swiper/css";
 
+import "swiper/css/free-mode";
 import "swiper/css/pagination";
 
-import { Navigation, Pagination } from "swiper/modules";
+import { FreeMode, Navigation, Pagination } from "swiper/modules";
 
 // Handle click btn read more
 const isView = ref(false);
+const isOpenInforCompany = ref(false);
+const isOpenInforStore = ref(false);
 
 const handleReadMore = () => {
   isView.value = !isView.value;
+};
+
+// Handle click btn change language
+const isOpen = ref(false);
+
+const handleOpenChangeLanguage = () => {
+  isOpen.value = !isOpen.value;
+};
+
+const changeImage = (src) => {
+  document.getElementById("mainImage").src = src;
 };
 </script>
 
 <template>
   <div class="flex justify-center items-center">
-    <div class="bg-[#f9f9fa] w-full md:w-96">
+    <div class="bg-[#f9f9fa] w-full md:w-96 relative">
+      <div class="absolute right-0 pr-6 pt-2">
+        <!-- btn change language -->
+        <div class="flex-col">
+          <div
+            @click="handleOpenChangeLanguage"
+            class="flex items-center gap-1.5 bg-white border border-[#e6ebeb] py-2 px-4 rounded-2xl mb-2"
+          >
+            <div>
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 17 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8.00667 0C3.58667 0 0 3.58667 0 8.00667C0 12.4267 3.58667 16.0133 8.00667 16.0133C12.4267 16.0133 16.0133 12.4267 16.0133 8.00667C16.0133 3.58667 12.4267 0 8.00667 0ZM2.30667 11.4533C1.85333 10.7067 1.54 9.86667 1.41333 8.96667C1.41333 8.95333 1.41333 8.94667 1.41333 8.93333C1.37333 8.62667 1.34667 8.32 1.34667 8.00667C1.34667 7.76 1.36 7.51333 1.38667 7.27333C2.27333 7.08 3.32667 6.96 4.06667 7.09333C4.47333 7.16667 4.66 7.29333 4.73333 7.39333C4.78 7.46 4.87333 7.64667 4.71333 8.12667C4.46667 8.87333 4.29333 9.41333 4.18667 9.82C4.08667 10.2133 4.02667 10.5533 4.06 10.8667C4.1 11.2133 4.24 11.4533 4.36 11.6467C4.38 11.68 4.40667 11.72 4.42667 11.7533C4.52667 11.9067 4.62667 12.06 4.74667 12.3C5.02667 12.86 5 13.4667 4.90667 13.9C4.64667 13.76 4.4 13.6067 4.16 13.44C4.14667 13.4267 4.13333 13.42 4.11333 13.4067C3.89333 13.2533 3.69333 13.08 3.49333 12.9C3.47333 12.88 3.45333 12.86 3.42667 12.84C3.01333 12.4467 2.65333 12.0067 2.34667 11.52C2.33333 11.4933 2.31333 11.4667 2.3 11.4467L2.30667 11.4533ZM8.55333 12.2133C9.26 13.5533 9.14667 14.06 9.06 14.2133C8.93333 14.44 8.54 14.5933 7.87333 14.6533C7.6 14.6533 7.33333 14.6333 7.06667 14.6C7.05333 14.6 7.04667 14.6 7.03333 14.6C6.72667 14.5533 6.43333 14.4933 6.14667 14.4067C6.34 13.72 6.43333 12.6933 5.93333 11.7067C5.78 11.3933 5.63333 11.1733 5.53333 11.0133C5.51333 10.98 5.49333 10.9533 5.48 10.9333C5.38667 10.78 5.38 10.7533 5.38 10.72C5.37333 10.66 5.38 10.52 5.47333 10.1533C5.56667 9.8 5.72667 9.3 5.97333 8.54667C6.21333 7.82667 6.2 7.14667 5.80667 6.60667C5.44 6.1 4.84667 5.88 4.3 5.78C3.5 5.63333 2.53333 5.71333 1.69333 5.85333C1.69333 5.85333 1.69333 5.84667 1.69333 5.84C1.76667 5.62 1.86 5.4 1.96 5.19333C1.97333 5.16667 1.98667 5.14 2 5.11333C2.09333 4.92 2.19333 4.73333 2.30667 4.55333C2.32667 4.52667 2.34 4.49333 2.36 4.46667C2.47333 4.28 2.6 4.1 2.73333 3.93333C2.74667 3.91333 2.76 3.9 2.77333 3.88C2.92 3.69333 3.08 3.50667 3.25333 3.34C3.32667 3.35333 3.40667 3.34667 3.48667 3.32667C3.93333 3.22667 4.7 3.13333 5.50667 3.19333C6.32 3.25333 7.08 3.45333 7.59333 3.86667C7.90667 4.12 8.14 4.4 8.39333 4.70667C8.42 4.74 8.45333 4.78 8.48 4.81333C8.75333 5.14 9.09333 5.54667 9.6 5.78C10.1333 6.03333 10.7533 6.05333 11.5 5.86667C12.14 5.7 12.9133 5.37333 13.8733 4.84667C14 5.08 14.1133 5.32 14.2067 5.57333C14.2067 5.58 14.2067 5.58667 14.2133 5.59333C14.3067 5.83333 14.3867 6.07333 14.4467 6.32667C14.4467 6.34667 14.4533 6.36667 14.46 6.38667C14.5933 6.90667 14.66 7.45333 14.66 8.02C14.66 8.03333 14.66 8.04 14.66 8.04667C14.66 9 14.4467 9.91333 14.08 10.7333C13.5467 8.58667 12.5667 7.82 11.7667 7.58C10.8 7.28667 9.73333 7.67333 8.98667 8.58C8.10667 9.64667 7.93333 11.08 8.54 12.2267L8.55333 12.2133ZM10.24 1.72C10.44 1.79333 10.64 1.87333 10.8333 1.96667C10.86 1.98 10.8933 1.99333 10.92 2.00667C11.1 2.09333 11.28 2.19333 11.4533 2.3C11.4867 2.32 11.5133 2.34 11.5467 2.35333C11.72 2.46 11.8867 2.58 12.0467 2.7C12.0733 2.72 12.0933 2.73333 12.12 2.75333C12.2933 2.89333 12.4667 3.04 12.6267 3.19333C12.6267 3.19333 12.64 3.2 12.64 3.20667C12.8133 3.37333 12.9733 3.54667 13.1267 3.72667C12.2667 4.18667 11.64 4.44 11.1733 4.56C10.62 4.7 10.34 4.64 10.1667 4.56C9.96 4.46667 9.78667 4.28667 9.50667 3.94667C9.48 3.91333 9.45333 3.88 9.42 3.84C9.17333 3.54 8.85333 3.15333 8.42667 2.80667C7.60667 2.15333 6.53333 1.91333 5.6 1.84667C5.55333 1.84667 5.5 1.84667 5.45333 1.84C6.24 1.51333 7.10667 1.33333 8.01333 1.33333C8.78 1.33333 9.51333 1.46 10.1933 1.7C10.2133 1.7 10.2267 1.71333 10.2467 1.72H10.24ZM10.44 14.2067C10.5333 13.52 10.3 12.6667 9.73333 11.5867C9.3 10.7667 9.62667 9.9 10.0333 9.40667C10.3467 9.02667 10.8733 8.67333 11.4 8.83333C12.2 9.07333 12.8 10.3933 13.04 12.3667C12.34 13.1733 11.4533 13.8067 10.4467 14.2L10.44 14.2067Z"
+                  fill="#3A424E"
+                />
+                <path
+                  d="M8.00667 0C3.58667 0 0 3.58667 0 8.00667C0 12.4267 3.58667 16.0133 8.00667 16.0133C12.4267 16.0133 16.0133 12.4267 16.0133 8.00667C16.0133 3.58667 12.4267 0 8.00667 0ZM2.30667 11.4533C1.85333 10.7067 1.54 9.86667 1.41333 8.96667C1.41333 8.95333 1.41333 8.94667 1.41333 8.93333C1.37333 8.62667 1.34667 8.32 1.34667 8.00667C1.34667 7.76 1.36 7.51333 1.38667 7.27333C2.27333 7.08 3.32667 6.96 4.06667 7.09333C4.47333 7.16667 4.66 7.29333 4.73333 7.39333C4.78 7.46 4.87333 7.64667 4.71333 8.12667C4.46667 8.87333 4.29333 9.41333 4.18667 9.82C4.08667 10.2133 4.02667 10.5533 4.06 10.8667C4.1 11.2133 4.24 11.4533 4.36 11.6467C4.38 11.68 4.40667 11.72 4.42667 11.7533C4.52667 11.9067 4.62667 12.06 4.74667 12.3C5.02667 12.86 5 13.4667 4.90667 13.9C4.64667 13.76 4.4 13.6067 4.16 13.44C4.14667 13.4267 4.13333 13.42 4.11333 13.4067C3.89333 13.2533 3.69333 13.08 3.49333 12.9C3.47333 12.88 3.45333 12.86 3.42667 12.84C3.01333 12.4467 2.65333 12.0067 2.34667 11.52C2.33333 11.4933 2.31333 11.4667 2.3 11.4467L2.30667 11.4533ZM8.55333 12.2133C9.26 13.5533 9.14667 14.06 9.06 14.2133C8.93333 14.44 8.54 14.5933 7.87333 14.6533C7.6 14.6533 7.33333 14.6333 7.06667 14.6C7.05333 14.6 7.04667 14.6 7.03333 14.6C6.72667 14.5533 6.43333 14.4933 6.14667 14.4067C6.34 13.72 6.43333 12.6933 5.93333 11.7067C5.78 11.3933 5.63333 11.1733 5.53333 11.0133C5.51333 10.98 5.49333 10.9533 5.48 10.9333C5.38667 10.78 5.38 10.7533 5.38 10.72C5.37333 10.66 5.38 10.52 5.47333 10.1533C5.56667 9.8 5.72667 9.3 5.97333 8.54667C6.21333 7.82667 6.2 7.14667 5.80667 6.60667C5.44 6.1 4.84667 5.88 4.3 5.78C3.5 5.63333 2.53333 5.71333 1.69333 5.85333C1.69333 5.85333 1.69333 5.84667 1.69333 5.84C1.76667 5.62 1.86 5.4 1.96 5.19333C1.97333 5.16667 1.98667 5.14 2 5.11333C2.09333 4.92 2.19333 4.73333 2.30667 4.55333C2.32667 4.52667 2.34 4.49333 2.36 4.46667C2.47333 4.28 2.6 4.1 2.73333 3.93333C2.74667 3.91333 2.76 3.9 2.77333 3.88C2.92 3.69333 3.08 3.50667 3.25333 3.34C3.32667 3.35333 3.40667 3.34667 3.48667 3.32667C3.93333 3.22667 4.7 3.13333 5.50667 3.19333C6.32 3.25333 7.08 3.45333 7.59333 3.86667C7.90667 4.12 8.14 4.4 8.39333 4.70667C8.42 4.74 8.45333 4.78 8.48 4.81333C8.75333 5.14 9.09333 5.54667 9.6 5.78C10.1333 6.03333 10.7533 6.05333 11.5 5.86667C12.14 5.7 12.9133 5.37333 13.8733 4.84667C14 5.08 14.1133 5.32 14.2067 5.57333C14.2067 5.58 14.2067 5.58667 14.2133 5.59333C14.3067 5.83333 14.3867 6.07333 14.4467 6.32667C14.4467 6.34667 14.4533 6.36667 14.46 6.38667C14.5933 6.90667 14.66 7.45333 14.66 8.02C14.66 8.03333 14.66 8.04 14.66 8.04667C14.66 9 14.4467 9.91333 14.08 10.7333C13.5467 8.58667 12.5667 7.82 11.7667 7.58C10.8 7.28667 9.73333 7.67333 8.98667 8.58C8.10667 9.64667 7.93333 11.08 8.54 12.2267L8.55333 12.2133ZM10.24 1.72C10.44 1.79333 10.64 1.87333 10.8333 1.96667C10.86 1.98 10.8933 1.99333 10.92 2.00667C11.1 2.09333 11.28 2.19333 11.4533 2.3C11.4867 2.32 11.5133 2.34 11.5467 2.35333C11.72 2.46 11.8867 2.58 12.0467 2.7C12.0733 2.72 12.0933 2.73333 12.12 2.75333C12.2933 2.89333 12.4667 3.04 12.6267 3.19333C12.6267 3.19333 12.64 3.2 12.64 3.20667C12.8133 3.37333 12.9733 3.54667 13.1267 3.72667C12.2667 4.18667 11.64 4.44 11.1733 4.56C10.62 4.7 10.34 4.64 10.1667 4.56C9.96 4.46667 9.78667 4.28667 9.50667 3.94667C9.48 3.91333 9.45333 3.88 9.42 3.84C9.17333 3.54 8.85333 3.15333 8.42667 2.80667C7.60667 2.15333 6.53333 1.91333 5.6 1.84667C5.55333 1.84667 5.5 1.84667 5.45333 1.84C6.24 1.51333 7.10667 1.33333 8.01333 1.33333C8.78 1.33333 9.51333 1.46 10.1933 1.7C10.2133 1.7 10.2267 1.71333 10.2467 1.72H10.24ZM10.44 14.2067C10.5333 13.52 10.3 12.6667 9.73333 11.5867C9.3 10.7667 9.62667 9.9 10.0333 9.40667C10.3467 9.02667 10.8733 8.67333 11.4 8.83333C12.2 9.07333 12.8 10.3933 13.04 12.3667C12.34 13.1733 11.4533 13.8067 10.4467 14.2L10.44 14.2067Z"
+                  fill="black"
+                  fill-opacity="0.2"
+                />
+              </svg>
+            </div>
+            <p class="text-[#2E353E] text-sm font-semibold cursor-pointer">
+              ENG
+            </p>
+            <div>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M3.52858 6.19526C3.78892 5.93491 4.21103 5.93491 4.47138 6.19526L7.99998 9.72386L11.5286 6.19526C11.7889 5.93491 12.211 5.93491 12.4714 6.19526C12.7317 6.45561 12.7317 6.87772 12.4714 7.13807L8.94279 10.6667C8.42209 11.1874 7.57787 11.1874 7.05717 10.6667L3.52858 7.13807C3.26823 6.87772 3.26823 6.45561 3.52858 6.19526Z"
+                  fill="#3A424E"
+                />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M3.52858 6.19526C3.78892 5.93491 4.21103 5.93491 4.47138 6.19526L7.99998 9.72386L11.5286 6.19526C11.7889 5.93491 12.211 5.93491 12.4714 6.19526C12.7317 6.45561 12.7317 6.87772 12.4714 7.13807L8.94279 10.6667C8.42209 11.1874 7.57787 11.1874 7.05717 10.6667L3.52858 7.13807C3.26823 6.87772 3.26823 6.45561 3.52858 6.19526Z"
+                  fill="black"
+                  fill-opacity="0.2"
+                />
+              </svg>
+            </div>
+          </div>
+          <!-- box content change language -->
+          <div
+            v-if="isOpen"
+            class="border shadow-gray-400 shadow-inner transition-all duration-200 ease-in-out"
+          >
+            <div
+              class="text-[#2E353E] text-sm font-semibold bg-white text-center py-2 hover:bg-[#e1ecdc] cursor-pointer"
+            >
+              ENG
+            </div>
+            <div
+              class="text-[#2E353E] text-sm font-semibold bg-white text-center py-2 hover:bg-[#e1ecdc] cursor-pointer"
+            >
+              VIE
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="bg-white pb-4 mb-4">
         <!-- Images -->
         <div class="w-full md:w-96 px-4">
           <div>
-            <img :src="image" alt="" class="w-full mb-3" />
+            <img :src="image" alt="" class="w-full mb-3" id="mainImage" />
           </div>
           <!-- List image -->
           <div class="flex justify-center items-center gap-2 mb-3">
-            <!-- <swiper
-              ref="{swiperRef}"
-              :slidesPerView="3"
-              :centeredSlides="true"
-              :spaceBetween="30"
-              :pagination="{
-                type: 'fraction',
-              }"
-              :navigation="true"
-              :modules="modules"
-              class="mySwiper"
-            >
-              <swiper-slide>
-                <div>
-                  <img :src="image_1" alt="" />
-                </div>
+            <swiper :slidesPerView="3" :spaceBetween="30">
+              <swiper-slide class="hover:border border-[#C38F51]">
+                <img
+                  :src="image_3"
+                  alt=""
+                  class="w-full"
+                  @click="changeImage(image_3)"
+                />
               </swiper-slide>
+
               <swiper-slide
-                ><div>
-                  <img :src="image_2" alt="" /></div
-              ></swiper-slide>
-              <swiper-slide>
-                <div>
-                  <img :src="image_3" alt="" />
-                </div>
+                class="hover:border border-[#C38F51]"
+                @click="changeImage(image_1)"
+              >
+                <img :src="image_1" alt="" class="w-full" />
               </swiper-slide>
-            </swiper> -->
 
-            <div>
-              <img :src="image_3" alt="" />
-            </div>
+              <swiper-slide
+                class="hover:border border-[#C38F51]"
+                @click="changeImage(image_2)"
+              >
+                <img :src="image_2" alt="" class="w-full" />
+              </swiper-slide>
 
-            <div class="hover:border border-[#C38F51]">
-              <img :src="image_1" alt="" />
-            </div>
-
-            <div class="hover:border border-[#C38F51]">
-              <img :src="image_2" alt="" />
-            </div>
+              <swiper-slide
+                class="hover:border border-[#C38F51]"
+                @click="changeImage(image_2)"
+              >
+                <img :src="image_2" alt="" class="w-full" />
+              </swiper-slide>
+            </swiper>
           </div>
         </div>
 
@@ -168,7 +246,7 @@ const handleReadMore = () => {
       </div>
 
       <!-- Related products -->
-      <div class="bg-white pl-4 py-10">
+      <div class="bg-white pl-4 py-10 mb-10">
         <p class="font-semibold text-2xl text-[#2E353E] text-center mb-4">
           Related products
         </p>
@@ -231,17 +309,16 @@ const handleReadMore = () => {
         </div>
       </div>
 
-      <div class="w-96 px-4 mb-5">
-        <el-collapse
-          v-model="activeNames"
-          accordion
-          class="mb-2 bg-transparent"
-        >
-          <el-collapse-item name="1">
-            <template #title>
-              <div class="text-[#2E353E] font-semibold text-lg">Store</div>
-            </template>
-            <div>
+      <div class="w-96 px-6 mb-5 bg-[#f9f9fa]">
+        <div class="mb-3">
+          <div class="border-b border-[#E0E2E6] pb-1 mb-3">
+            <div
+              class="text-[#2E353E] font-semibold text-lg mb-1 cursor-pointer"
+              @click="isOpenInforStore = !isOpenInforStore"
+            >
+              Store
+            </div>
+            <Collapse class="bg-[#f9f9fa] mb-3" :when="isOpenInforStore">
               <div class="flex gap-5 mb-3">
                 <div>
                   <img :src="qr" alt="" />
@@ -293,13 +370,16 @@ const handleReadMore = () => {
                   <p>Hanoi, Vietnam</p>
                 </div>
               </div>
+            </Collapse>
+          </div>
+          <div class="border-b border-[#E0E2E6] pb-1">
+            <div
+              class="text-[#2E353E] font-semibold text-lg mb-1 cursor-pointer"
+              @click="isOpenInforCompany = !isOpenInforCompany"
+            >
+              Company
             </div>
-          </el-collapse-item>
-          <el-collapse-item name="2">
-            <template #title>
-              <div class="text-[#2E353E] font-semibold text-lg">Company</div>
-            </template>
-            <div>
+            <Collapse class="bg-[#f9f9fa] mb-3" :when="isOpenInforCompany">
               <div class="flex gap-5 mb-3">
                 <div>
                   <img :src="qr" alt="" />
@@ -351,12 +431,12 @@ const handleReadMore = () => {
                   <p>Hanoi, Vietnam</p>
                 </div>
               </div>
-            </div>
-          </el-collapse-item>
-        </el-collapse>
+            </Collapse>
+          </div>
+        </div>
 
         <div>
-          <p class="text-[#2E353E] text-lg font-semibold mb-4">Follow us</p>
+          <p class="text-[#2E353E] text-lg font-semibold mb-3">Follow us</p>
           <!-- Social Media -->
           <div class="flex gap-2 mb-6">
             <!-- Youtube -->
