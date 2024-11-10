@@ -847,7 +847,7 @@ const changeImage = (src) => {
           >
             Powered by
             <span
-              class="text-[#2E353E] text-sm font-semibold leading-[17.08px] tracking-[0.28px]"
+              class="text-[#2E353E] text-sm font-bold leading-[17.08px] tracking-[0.28px]"
               >QR Code Maketing</span
             >
           </p>
